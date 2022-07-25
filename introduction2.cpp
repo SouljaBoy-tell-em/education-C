@@ -16,6 +16,8 @@
 #define SPACE ' '
 #define DOT '.'
 #define COVERAGE 350
+#define SIZE 4
+#define SIZE1 10
 
 long sum_squares (long start, long end);
 long get_long (void);
@@ -28,7 +30,8 @@ int imin (int n, int m);
 int what_if (int n);
 int test (int, int);
 void pointer_traid (int*, int*);
-
+int sum (int* ar, int size);
+int sump (int* start, int* end);
 
 int main (void) {
 	
@@ -820,10 +823,6 @@ int main (void) {
 	
 	
 	
-	
-	
-	
-	
 	// ÓÊÀÇÀÒÅËÈ
 	
 	int pooh;
@@ -855,12 +854,109 @@ int main (void) {
 		
 	}
 	
+	
+	
+	
+	// ÌÀÑÑÈÂÛ
+	
+	int arr[6] = {0, 0, 1, 2, 2, 2}; // èíèöèàëèçàöèÿ ìàññèâà
+	
+	int arr1[] = {1, 2, 3, 4}; // äðóãîé ôîðìàò èíèöèàëèçàöèè ìàññèâà
+	
+	arr[5] = 47;
+	
+	for (int i = 0; i < 6; i++)
+		printf ("%d\n", arr[i]);
+	
+	
+	
+	
+	int arr[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	
+	for (int i = 0; i < sizeof arr / sizeof arr[0]; i++) // åñëè ìû íå çíàåì êîëè÷åñòâà ýëåìåíòîâ â ìàññèâå (íàïðèìåð, îíî íå ôèêñèðóåòñÿ),
+		printf ("In month number %d contains %d days.\n", i + 1, arr[i]); // òî ìîæíî ïîéòè ÷åðåç sizeof. sizeof arr - ñêîëüêî çàíèìàåò ïàìÿòè âåñü ìàññèâ.
+													// sizeof arr[0] - ñêîëüêî çàíèìàåò ïàìÿòè îäíà ÿ÷åéêà. Äåëèì äðóã íà äðóãà è ïîëó÷àåì ÷èñëî ýëåìåíòîâ.
+	
+	
+	
+	
+	
+	int arr[6];
+	arr == &arr[0]; // ýòî âûðàæåíèå ÿâëÿåòñÿ èñòèííûì. È arr, è &arr[0] ïðåäñòàâëÿþò àäðåñ â ïàìÿòè, ãäå íàõîäèòñÿ ïåðâûé ýëåìåíò ìàññèâà
+	
+	
+	
+	
+	
+	short dates [SIZE];
+	short* pti;
+	short* pti1;
+	short index;
+	double bills[SIZE];
+	double* ptf;
+	
+	pti = dates;
+	pti1 = &dates[0];
+	ptf = bills;
+	
+	printf ("%23s %23s %23s\n", "short", "double", "short &");
+	for (int i = 0; i < SIZE; i++)  {
+		
+		printf("%Pointers + %d: %10p %10p %10p\n", i, pti + i, ptf + i, pti1 + i);
+		
+	}
+	
+	
+	
+	
+	
+	// ËÎÃÈ×ÅÑÊÈÅ ÐÀÂÅÍÑÒÂÀ:
+	// *dates + 2 == &dates[2] - çíà÷åíèå 3-ãî ýëåìåíòà ìàññèâà dates[]
+	// *(dates + 2) == dates[2] - äîáàâëåíèå 2 ê çíà÷åíèþ ïåðâîãî ýëåìåíòà
+	
+	
+	
+	
+	int arr[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	
+	for (int i = 0; i < sizeof arr / sizeof arr[0]; i++)
+		printf ("Month ¹%d have %d days\n", i + 1, *(arr + i)); // ò.å. *(arr + i) - ýòî òî æå ñàìîå, ÷òî è arr[i]
+		
+	
+	
+	
+	
+	
+	int marbles[5];
+	int total = 0;
+	
+	int size = sizeof marbles / sizeof marbles[0];
+	
+	for (int i = 0; i < size; i++) {
+		scanf("%d", &marbles[i]);
+	}
+	
+	total = sum(marbles, size);
+	printf("%d", total);
+	
+	
+	
+	
+	int arr[SIZE1] = {20, 10, 5, 39, 4, 16, 19, 26, 31, 20};
+	
+	printf("%d", sump(arr, arr + SIZE1));
+	
 	*/
 	
 	
 	
+	int urn[5] = {100, 200, 300, 400, 500};
 	
+	int *ptr1, *ptr2, *ptr3;
 	
+	ptr1 = urn; // óêàçàòåëü íà ìàññèâ urn. Ôàêòè÷åñêè ïðèñâàèâàåì ïåðâûé ýëåìåíò ìàññèâà (100).
+	ptr2 = &urn[2]; // òî æå ñàìîå, íî ïðèñâàèâàåì òðåòèé ýëåìåíò ìàññèâà
+	printf("%d\n%d", *ptr1, *ptr2);
 	
 	
 	return 0;
@@ -990,5 +1086,32 @@ void pointer_traid (int* x, int* y) {
 	int traid = *x;
 	*x = *y;
 	*y = traid;
+	
+}
+
+int sum (int* ar, int size) {
+	
+	int total = 0;
+	
+	for (int i = 0; i < size; i++)
+		total += *(ar + i);
+		
+	return total;
+	
+}
+
+int sump (int* start, int* end) {
+	
+	int total = 0;
+	
+	while (start < end) {
+		
+		total += *start;
+		start++;
+		
+	}
+	
+	
+	return total;
 	
 }
