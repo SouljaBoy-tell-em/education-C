@@ -89,3 +89,21 @@ pr = arr назовем указателем на масиив arr.
 
 Вновь рассмотрим следующий код:
 
+short dates[5];
+double bills[5];
+short* pti;
+double* ptf;
+pti = dates;
+ptf = bills;
+printf ("%23s %15s", "short", "double\n");
+for (int i = 0; i < 5; i++)
+  printf ("pointers + %d: %10p %10p\n", i, pti + i, ptf + i);
+  
+ OUTPUT: 
+                   short         double
+pointers + 0: 00000000006AFD20 00000000006AFCF0
+pointers + 1: 00000000006AFD22 00000000006AFCF8
+pointers + 2: 00000000006AFD24 00000000006AFD00
+pointers + 3: 00000000006AFD26 00000000006AFD08
+pointers + 4: 00000000006AFD28 00000000006AFD10
+
