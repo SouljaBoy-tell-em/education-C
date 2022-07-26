@@ -107,3 +107,24 @@ pointers + 2: 00000000006AFD24 00000000006AFD00
 pointers + 3: 00000000006AFD26 00000000006AFD08
 pointers + 4: 00000000006AFD28 00000000006AFD10
 
+Пояснение:
+dates, bills - массивы short и double, каждый из которых по 5 элементов, соответственно.
+pti, ptf - указатели типов short и double, соответственно. 
+pti = dates - указатель на массив dates.
+ptf = bills - указатель на массив bills.
+printf ("pointers + %d: %10p %10p\n", i, pti + i, ptf + i) - сначала выводит адреса на массивы dates и bills при i = 0. Но что происходит при увеличении
+индекса? Видим, что в случае типа шорт, адрес меняется на 2 значения; в случае double - на 8 значений. Адрес меняется в зависимости от того, какой тип
+данных получает указатель. 
+
+Рассмотрим следующий код (дополнение к предыдущему):
+
+short dates[5];
+double bills[5];
+short* pti;
+double* ptf;
+pti = dates;
+ptf = bills;
+printf ("%23s %15s ", "short", "double\n");
+for (int i = 0; i < 5; i++)
+  printf ("pointers + %d: %10p %10p\n", i, pti + i, ptf + i);
+
