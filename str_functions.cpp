@@ -5,10 +5,11 @@ int puts1 (const char * ar);
 char* strchr1 (char * ar, int ch);
 unsigned int strlen1 (const char * ar);
 char* strcpy1 (char* before, const char* from);
+char* strncpy1 (char* before, const char* from, int size);
 
 int main () {
-	
-	
+		
+		
 	
 }
 
@@ -71,4 +72,19 @@ char* strcpy1 (char* before, const char* from) {
 	
 	return before;
 	
+}
+
+char* strncpy1 (char* before, const char* from, int size) {
+	
+	int i = 0;
+	
+	while (i != size - 1) {
+		
+		* (before + i) = * (from + i);
+		i++;
+		
+	}
+	
+	return before;
+
 }
