@@ -3,6 +3,8 @@
 
 int puts1 (const char * ar);
 char* strchr1 (char * ar, int ch);
+unsigned int strlen1 (const char * ar);
+char* strcpy1 (char* before, const char* from);
 
 int main () {
 	
@@ -46,4 +48,27 @@ char* strchr1 (char * ar, int ch) {
 	
 }
 
+unsigned int strlen1 (const char * ar) {
+	
+	int i = 0; 
+	
+	while (*(ar + i) != '\0')
+		i++;
+	
+	return i;
+	
+}
 
+char* strcpy1 (char* before, const char* from) {
+	
+	int i = 0;
+	
+	while (* (before + i) != '\0') {
+		
+		* (before + i) = *(from + i);
+		i++;
+	}
+	
+	return before;
+	
+}
