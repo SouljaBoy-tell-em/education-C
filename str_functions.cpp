@@ -7,9 +7,16 @@ unsigned int strlen1 (const char * ar);
 char* strcpy1 (char* before, const char* from);
 char* strncpy1 (char* before, const char* from, int size);
 char* strcat1 (char* before, const char* from);
+char* strncat1 (char* before, const char* from, int size);
 
 int main () {
 		
+	char ch1[20] = "Hello, world!";
+	char ch2[10] = "Hi, team!";
+	
+	strncat1(ch1, ch2, 0);
+	puts(ch1);
+	
 	
 	
 }
@@ -109,4 +116,27 @@ char* strcat1 (char* before, const char* from) {
 	
 	return before;	
 
+}
+
+char* strncat1 (char* before, const char* from, int size) {
+	
+	int i = 0, j = 1;
+	
+	while (*(before + i) != '\0') {
+		i++;
+	}
+	
+	if (size != 0) {
+		*(before + i) = *from;
+		i++;
+	}
+	
+	while (j < size) {
+		* (before + i) = *(from + j);
+		j++;
+		i++;
+	}
+	
+	return before;	
+	
 }
