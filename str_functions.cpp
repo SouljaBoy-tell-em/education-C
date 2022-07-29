@@ -6,11 +6,15 @@ char* strchr1 (char * ar, int ch);
 unsigned int strlen1 (const char * ar);
 char* strcpy1 (char* before, const char* from);
 char* strncpy1 (char* before, const char* from, int size);
+char* strcat1 (char* before, const char* from);
 
 int main () {
 		
-		
+	char ar1[16] = "Hello world!";
+	char ar2[10] = "Hi, team!";
 	
+	strcat1 (ar2, ar1);
+	puts (ar2);
 }
 
 int puts1 (const char * ar) {
@@ -78,7 +82,7 @@ char* strncpy1 (char* before, const char* from, int size) {
 	
 	int i = 0;
 	
-	while (i != size - 1) {
+	while (i != size) {
 		
 		* (before + i) = * (from + i);
 		i++;
@@ -87,4 +91,24 @@ char* strncpy1 (char* before, const char* from, int size) {
 	
 	return before;
 
+}
+
+char* strcat1 (char* before, const char* from) {
+	
+	int i = 0, j = 1;
+	
+	while (*(before + i) != '\0') {
+		i++;
+	}
+	
+	*(before + i) = *from;
+	i++;
+	
+	while (*from != '\0') {
+		* (before + i) = *(from + j);
+		from++;
+		i++;
+	}
+	
+	
 }
