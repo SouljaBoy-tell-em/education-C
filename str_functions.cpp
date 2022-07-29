@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 int puts1 (const char * ar);
 char* strchr1 (char * ar, int ch);
@@ -8,15 +9,10 @@ char* strcpy1 (char* before, const char* from);
 char* strncpy1 (char* before, const char* from, int size);
 char* strcat1 (char* before, const char* from);
 char* strncat1 (char* before, const char* from, int size);
+char* strdup1 (const char* ar);
 
 int main () {
 		
-	char ch1[20] = "Hello, world!";
-	char ch2[10] = "Hi, team!";
-	
-	strncat1(ch1, ch2, 0);
-	puts(ch1);
-	
 	
 	
 }
@@ -138,5 +134,12 @@ char* strncat1 (char* before, const char* from, int size) {
 	}
 	
 	return before;	
+	
+}
+
+char* strdup1 (const char* str) {
+	
+	
+	
 	
 }
