@@ -10,11 +10,8 @@ char* strcat1 (char* before, const char* from);
 
 int main () {
 		
-	char ar1[16] = "Hello world!";
-	char ar2[10] = "Hi, team!";
 	
-	strcat1 (ar2, ar1);
-	puts (ar2);
+	
 }
 
 int puts1 (const char * ar) {
@@ -110,5 +107,6 @@ char* strcat1 (char* before, const char* from) {
 		i++;
 	}
 	
-	
+	return before;	
+
 }
