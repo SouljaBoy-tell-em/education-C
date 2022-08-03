@@ -59,6 +59,19 @@ double sum_struct1(struct funds stan);
 void getinfo (struct namect * pst);
 void makeinfo (struct namect * pst);
 void showinfo (struct namect * pst);
+struct namect getinfo (void);
+struct namect makeinfo (struct namect info);
+void showinfo (struct namect);
+void new_getinfo (struct namect * pst);
+void showFlex (const struct flex * p);
+double sum_struct2 (const struct funds money[], int n);
+
+struct book { // ñîçäàíèå ñòðóêòóðû
+	char title[41];
+	char author[31];
+	float value;
+};
+
 
 struct funds {
 	char bank[50];
@@ -68,9 +81,15 @@ struct funds {
 };
 
 struct namect {
-	char fname[50];
-	char lname[50];
+	char *fname;
+	char *lname;
 	int letters;
+};
+
+struct flex {
+	size_t count;
+	double average;
+	double scores[]; // ÷ëåí òèïà ãèáêîãî ìàññèâà.
 };
 
 int main (void) {
@@ -1545,17 +1564,6 @@ int main (void) {
 	
 	
 	
-	struct book { // ñîçäàíèå ñòðóêòóðû
-		char title[41];
-		char author[31];
-		float value;
-	};
-	
-	
-	
-	
-	
-	
 	
 	/*
 	
@@ -1756,6 +1764,188 @@ int main (void) {
 	makeinfo (&person);
 	showinfo (&person);	
 	
+	
+	
+	
+	
+	
+	
+	struct namect person;
+	
+	person = getinfo ();
+	person = makeinfo (person);
+	showinfo (person);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	struct booking {
+		char title [41];
+		char author [41];
+		float value;
+	};
+	
+	struct booking readlist;
+	int score;
+	scanf ("%d", &score);
+	
+	if (score >= 84) {
+		readlist = (struct booking) {
+			"Ïðåñòóïëåíèå è íàêàçàíèå",
+			"Ô.Äîñòîåâñêèé",
+			11.25
+		};
+	}
+	else {
+		readlist = (struct booking) {
+			"Êðàñèâàÿ øëÿïà ìèñòåðà Áàóíñè",
+			"Ôðåä Óèíñîì",
+			5.99
+		};
+	}
+	printf ("Íàçíà÷åííûå âàìè ðåéòèíãè:\n");
+	printf ("%s by %s: $%.2f\n", readlist.title, readlist.author, readlist.value);
+	
+	
+	
+	
+	
+	
+	
+	
+	struct flex * pf;
+	pf = malloc (sizeof (struct flex) + sizeof (double) * 5); // âûäåëåíèå ïàìÿòè ïîä ñòðóêòóðó è 
+	// 	5 ýëåìåíòîâ òèïà double â ãèáêîì ìàññèâå scores[];
+	// òåïåðü ìîæíî çàïîëíèòü ñïèñîê ýëåìåíòîâ ñòðóêòóðû çíà÷åíèÿìè:
+	pf->count = 5;
+	pf->scores[2] = 18.5
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	struct flex *pf1, *pf2;
+	int n = 5;
+	int i;
+	int tot = 0;
+	
+	pf1 = malloc (sizeof (struct flex) + sizeof (double) * n);
+	(*pf1).count = n;
+	for (i = 0; i < n; i++) {
+		(*pf1).scores[i] = 20.0 - i;
+		tot += (*pf1).scores[i];
+	}
+	(*pf1).average = tot / n;
+	showFlex (pf1);
+	n = 9;
+	tot = 0;
+	pf2 = malloc (sizeof (struct flex) + n * sizeof (double));
+	(*pf2).count = n;
+	for (int i = 0; i < n; i++) {
+		(*pf2).scores[i] = 20 - i/2;
+		tot += (*pf2).scores[i];
+	}
+	(*pf2).average = tot / n;
+	showFlex (pf2);
+	free (pf1);
+	free (pf2);
+	
+	
+	
+	
+	
+	
+	
+	struct person { // àíîíèìíàÿ ñòðóêòóðà. Èíèöèàëèçèðóåòñÿ ñëåäóþùèì îáðàçîì:
+		int id;
+		struct {char first[20]; char last[20];};
+	};
+	struct person ted = {8483, {"Ted", "Grass"}}; // ted ñîçäàåòñÿ â ñîîòâåòñòâèè ñ ñòðóêòóðîé.
+	printf ("%d\n", ted.id);
+	puts (ted.first);
+	puts (ted.last);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	struct funds jones[2] = {{ "Garlic-Melon Bank",
+								4032.27,
+								"Lucky's Savings and Loan",
+								8543.94
+							 },
+							 { "Honest Jack's Bank",
+							   3620.88,
+							   "Party Time Savings",
+							   3802.91
+							 }
+	};
+	
+	double total = sum_struct2 (jones, 2);
+	printf ("%lf", total);
+	
+	
+	
+	
+	
+	
+	
+	
+	struct book library[MAXBKS];
+	int count = 0;
+	FILE * fp;
+	
+	if ((fp = fopen("library.txt", "a+b")) == NULL) {
+		printf ("Ïðîáëåìà ñ îòêðûòèåì ôàéëà");
+		exit (1);
+	}
+	rewind (fp);
+	printf ("Â äàííûé ìîìåíò â áàçå äàííûõ:\n");
+	while (count < MAXBKS && fread (&library[count], sizeof (struct book), 1, fp))
+		printf ("%s àâòîðñòâà %s: $%.2f\n", library[count].title, library[count].author, library[count].value);
+	if (count == MAXBKS) {
+		printf ("Ôàéë çàïîëíåí!\n");
+		exit(1);
+	}
+	int filecount = count;
+	printf ("Ââåäèòå íàçâàíèÿ íîâûõ êíèã:\n");
+	printf ("Äëÿ çàâåðøåíèÿ ïðîãðàììû íàæìèòå êëàâèøó [enter]\n");
+	gets (library[count].title);
+	while (library[count].title[0] != '\0' && count <= MAXBKS) {
+		printf ("Ââåäèòå àâòîðà:\n");
+		gets (library[count].author);
+		printf ("Ââåäèòå ñòîèìîñòü ýòîé êíèãè:\n");
+		scanf ("%f", &library[count].value);
+		while (getchar() != '\n')
+			continue;
+		count++;
+		printf ("Ââåäèòå íàçâàíèå êíèãè:\n");
+		gets (library[count].title);
+	}
+	if (count > 0) {
+		printf ("Âàø êàòàëîã êíèã:\n");
+		for (int i = 0; i < count; i++)
+			printf ("%s àâòîðñòâà %s: $%.2f\n", library[count].title, library[count].author, library[count].value);
+		fwrite (&library[filecount], sizeof (struct book), count - filecount, fp);
+	}
+	else
+		printf ("Êàê æàëü, ÷òî âû íå ÷èòàåòå!\n");
+	fclose (fp);
+	
 	*/
 	
 	
@@ -1764,8 +1954,29 @@ int main (void) {
 	
 	
 	
+	// ÎÁÚÅÄÈÍÅÍÈÅ - òèï, êîòîðûé ïîçâîëÿåò õðàíèòü äàííûå ðàçíûõ òèïîâ â îäíîì ìåñòå (íå îäíîâðåìåííî).
+	// ÑÎÇÄÀÍÈÅ:
+	
+	union hold { // - îáúåäèíåíèå
+		int digit;
+		double bigfl;
+		char letter;
+	};
+	
+	union hold fit; // â fit ìîæíî çàïèñàòü ñèìâîë, ÷èñëî òèïà int èëè ÷èñëî òèïà double.
+	union hold save[10]; //  ìàññèâ òàêèõ æå ýëåìåíòîâ.
+	union hold * pu; // óêàçàòåëü íà àäðåñ îáúåäèíåíèÿ hold.
+	
+	union hold valA;
+	valA.letter = 'R';
+	union hold valB = valA; // èíèöèàëèçàöèÿ îäíîãî îáúåäèíåíèÿ äðóãèì.
+	union hold valC = {88}; // èíèöèàëèçàöèÿ ÷ëåíà digit. 
+	union hold valD = {.bigfl = 118.2}; // íàçíà÷åííûé èíèöèàëèçàòîð.
 	
 	
+	fit.digit = 23; // â ïåðåìåííîé fit õðàíèòñÿ 23; èñïîëüçóåòñÿ 2 áàéòà.
+	fit.bigfl = 2.0; // 23 î÷èùåíî, 2.0 ñîõðàíåíî; èñïîëüçóåòñÿ 8 áàéò.
+	fit.letter = 'c'; // 2.0 î÷èùåíî, h ñîõðàíåíî; èñïîëüçóåòñÿ 1 áàéò.
 	
 	return 0;
 
@@ -2048,4 +2259,50 @@ void makeinfo (struct namect * pst) {
 
 void showinfo (struct namect * pst) {
 	printf ("%s %s, âàøå èìÿ è ôàìèëèÿ ñîäåðæàò %d áóêâ.\n", pst->fname, (*pst).lname, pst->letters);
+}
+
+struct namect getinfo (void) { // ôóíêöèÿ âîçâðàùàþùàÿ ñòðóêòóðó
+	struct namect temp;
+	printf ("Ââåäèòå ñâîå èìÿ:\n");
+	gets (temp.fname);
+	printf ("Ââåäèòå ñâîþ ôàìèëèþ:\n");
+	gets (temp.lname);
+	return temp;
+}
+
+struct namect makeinfo (struct namect info) { // ôóíêöèÿ âîçâðàùàþùàÿ ñòðóêòóðó è ïîëó÷àþùàÿ â êà÷åñòâå àðãóìåíòà ñòðóêòóðó
+	info.letters = strlen (info.fname) + strlen (info.lname);
+	return info;
+}
+
+void showinfo (struct namect info) { // ôóíêöèÿ, ïîëó÷àþùàÿ â êà÷åñòâå àðãóìåíòà ñòðóêòóðó
+	printf ("%s %s, âàøå èìÿ è ôàìèëèÿ ñîäåðæàò %d áóêâ.\n", info.fname, info.lname, info.letters);
+}
+
+void new_getinfo (struct namect * pst) {
+	char temp[10];
+	printf ("Ââåäèòå ñâîå èìÿ:\n");
+	gets (temp);
+	pst->fname = (char *) malloc (strlen (temp) + 1);
+	strcpy (pst->fname, temp);
+	printf ("Ââåäèòå ñâîþ ôàìèëèþ:\n");
+	gets (temp);
+	pst->lname = (char *) malloc (strlen (temp) + 1);
+	strcpy (pst->lname, temp);
+}
+
+void showFlex (struct flex * p) {
+	int i;
+	printf ("ÐÅÉÒÈÍÃÈ:");
+	for (i = 0; i < p->count; i++) {
+		printf ("%g ", p->scores[i]);
+		printf ("\nÑðåäíåå çíà÷åíèå: %g\n", p->average);
+	}
+}
+
+double sum_struct2 (const struct funds money[], int n) {
+	int i, total = 0;
+	for (i = 0; i < n; i++)
+		total += money[i].bankfund + money[i].savefund;
+	return total;
 }
