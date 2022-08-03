@@ -55,6 +55,23 @@ int sum2d (int ar[][COLS]);
 void put1 (const char * ar);
 void fit (char * ar, int size);
 void static_func (void);
+double sum_struct1(struct funds stan);
+void getinfo (struct namect * pst);
+void makeinfo (struct namect * pst);
+void showinfo (struct namect * pst);
+
+struct funds {
+	char bank[50];
+	double bankfund;
+	char save[50];
+	double savefund;
+};
+
+struct namect {
+	char fname[50];
+	char lname[50];
+	int letters;
+};
 
 int main (void) {
 	
@@ -1586,6 +1603,8 @@ int main (void) {
 	
 	
 	
+	/*
+	
 	struct book libr [MAXBKS];
 	int count = 0;
 	int i;
@@ -1598,7 +1617,7 @@ int main (void) {
 		printf ("Ââåäèòå öåíó êíèãè\n");
 		scanf ("%f", &libr[count].value);
 		count++;
-		while (getchar() != '\n')
+		while (getchar() != '\n') // íóæíî, ÷òîáû ââîä íå ïðåêðàøàëñÿ; èíà÷å âñå ñèìâîëû ïåðåäàäóòñÿ â íàçâàíèå êíèãè.
 			continue;
 		printf ("Ââåäèòå íàçâàíèå êíèãè\n");
 		printf ("×òîáû çàêîí÷èòü ââîä, íàæìèòå [enter]\n");
@@ -1612,15 +1631,137 @@ int main (void) {
 	else
 		printf ("Âû íè÷åãî íå ââåëè\n");
 	
+	*/
 	
 	
+	
+	
+	
+	
+	
+	const char * msgs[5] = {"Áëàãîäàðþ âàñ çà ÷óäåñíî ïðîâåä¸ííûé âå÷åð",
+							"Âû îäíîçíà÷íî ïðîäåìîíñòðèðîâàëè, ÷òî",
+							"ÿâëÿåò ñîáîþ îñîáûé òèï ìóæ÷èíû. Ìû îáÿçàòåëüíî äîëæíû âñòðåòèòüñÿ",
+							"çà âîñõèòèòåëüíûì óæèíîì ñ ", 
+							" è âåñåëî ïðîâåñòè âðåìÿ "};
+	struct names {
+		char first[20];
+		char last[20];
+	};
+	
+	struct guy {
+		struct names handle;
+		char favfood[20];
+		char job[20];
+		float income;
+	};
+	
+	/*
+	
+	struct guy fellow = {
+		{"Áèëëè", "Áîíñ"},
+		"çàïå÷åííûìè îìàðàìè",
+		"ïåðñîíàëüíûé òðåíåð",
+		68112.12
+	};
+	
+	
+	printf ("Äîðîãîé %s, \n\n", fellow.handle.first);
+	printf ("%s%s.\n", msgs[0], fellow.handle.first);
+	printf ("%s%s\n", msgs[1], fellow.job);
+	printf ("%s\n", msgs[2]);
+	printf ("%s%s%s", msgs[3], fellow.favfood, msgs[4]);
+	if (fellow.income > 150000.0)
+		puts ("!!");
+	else if (fellow.income > 75000.0)
+		puts ("!");
+	else
+		puts (".");
+	printf ("\n%40s$s\n", " ", "Äî ñêîðîé âñòðå÷è");
+	printf ("%40s%s\n", " ", "Øåéëà");
+	
+	
+	
+	
+	
+	
+	
+	
+	struct guy fellow[2] = {
+		{{"Áèëëè", "Áîíñ"},
+		"çàïå÷åííûìè îìàðàìè",
+		"ïåðñîíàëüíûé òðåíåð",
+		68112.12 },
+		
+		{ {"Äæèì", "Õîêèíñ"},
+		"ðûáíûì ôðèêàñå",
+		"ðåäàêòîð òàáëîèäà",
+		232400.00 }
+	};
+	
+	struct guy * him;
+	
+	printf ("àäðåñ #1: %p #2: %p\n", &fellow[0], &fellow[1]);
+	him = &fellow[0];
+	printf ("àäðåc #1: %p, #2: %p\n", him, him + 1);
+	printf ("him->income ðàâíî: $%.2f; (*him).income ðàâíî: $%.2f\n", him->income, (*him).income);
+	him++;
+	printf("him->favfood ðàâíî %s: him->handle.last ðàâíî %s\n", him->favfood, him->handle.last);
+	
+	
+	
+	
+	
+	
+	
+	
+	struct funds {
+		char bank[50];
+		double bankfund;
+		char save[50];
+		double savefund;
+	};
+	struct funds stan = {
+		"Garlic-Melon Bank", 
+		4032.27,
+		"Lucky's Savings and Loan", 
+		8543.94
+	};
+	printf ("Îáùàÿ ñóììà íà ñ÷åòàõ ó Ñòýíà ñîñòàâëÿåò %.2f.\n", sum_struct(stan.bankfund, stan.savefund));
+	
+	
+	
+	
+	
+	
+	
+	struct funds stan = {
+		"Garlic-Melon Bank", 
+		4032.27,
+		"Lucky's Savings and Loan", 
+		8543.94
+	};
+	sum_struct1(stan.bankfund, stan.savefund); // íåêîòîðûå êîìïèëÿòîðû ïîääåðæèâàþò
+	
+	
+	*/
+	
+	
+	
+	
+	
+	
+	struct namect person;
+	getinfo (&person);
+	makeinfo (&person);
+	showinfo (&person);	
 	
 	return 0;
 
 }
 
 void static_func (void) {
-	
+
 	static int value1 = 10; // òàêîå îáúÿâëåíèå ðàâíîñèëüíî òîìó, ÷òî ìû ñîçäàëè ïåðåìåííóþ â íà÷àëå
 					// ïðîãðàììû, ò.å. óñëîâíî value1 áûëà ñîçäàíà åäèíîæäû (îá ýòîì ñâèäåòåëüñòâóåò static)
 					// ïðè êàæäîì íîâîì âûçîâå ôóíêöèè value1 ñîõðàíÿåò íîâîå çíà÷åíèå. 
@@ -1873,4 +2014,27 @@ void fit (char * ar, int size) {
 	if (strlen(ar) > size)
 		*(ar + size) = '\0';
 	
+}
+
+double sum_struct (double x, double y) {
+	return (x + y);
+}
+
+double sum_struct1(struct funds stan) {
+	return (stan.bankfund + stan.savefund);
+}
+
+void getinfo (struct namect * pst) {
+	printf ("Ââåäèòå ñâî¸ èìÿ:\n");
+	gets (pst->fname);
+	printf ("Ââåäèòå ñâîþ ôàìèëèþ:\n");
+	gets (pst->lname);
+}
+
+void makeinfo (struct namect * pst) {
+	pst->letters = strlen (pst->fname) + strlen (pst->lname);
+}
+
+void showinfo (struct namect * pst) {
+	printf ("%s %s, âàøå èìÿ è ôàìèëèÿ ñîäåðæàò %d áóêâ.\n", pst->fname, (*pst).lname, pst->letters);
 }
