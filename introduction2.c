@@ -1744,6 +1744,18 @@ int main (void) {
 	sum_struct1(stan.bankfund, stan.savefund); // íåêîòîðûå êîìïèëÿòîðû ïîääåðæèâàþò
 	
 	
+	
+	
+	
+	
+	
+	pst->arg <=> (*pst).arg
+	
+	struct namect person;
+	getinfo (&person);
+	makeinfo (&person);
+	showinfo (&person);	
+	
 	*/
 	
 	
@@ -1751,10 +1763,9 @@ int main (void) {
 	
 	
 	
-	struct namect person;
-	getinfo (&person);
-	makeinfo (&person);
-	showinfo (&person);	
+	
+	
+	
 	
 	return 0;
 
