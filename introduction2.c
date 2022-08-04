@@ -25,6 +25,8 @@
 #define COLS 4
 #define MSG "I'm the best!"
 #define MAXBKS 100
+#define BYTE unsigned char // <=> typedef unsigned char BYTE;
+#define LEN 81
 
 
 
@@ -65,6 +67,13 @@ void showinfo (struct namect);
 void new_getinfo (struct namect * pst);
 void showFlex (const struct flex * p);
 double sum_struct2 (const struct funds money[], int n);
+char showmenu (void);
+void eatline (void);
+void ToUpper (char * str);
+void ToLower (char * str);
+void Transpose (char * str);
+void Dummy (char * str);
+void show (void (*fp)(char *), char * str);
 
 struct book { // ñîçäàíèå ñòðóêòóðû
 	char title[41];
@@ -1952,19 +1961,19 @@ int main (void) {
 	
 	
 	
-	
+	/*
 	
 	// ÎÁÚÅÄÈÍÅÍÈÅ - òèï, êîòîðûé ïîçâîëÿåò õðàíèòü äàííûå ðàçíûõ òèïîâ â îäíîì ìåñòå (íå îäíîâðåìåííî).
 	// ÑÎÇÄÀÍÈÅ:
 	
 	union hold { // - îáúåäèíåíèå
-		int digit;
-		double bigfl;
-		char letter;
+		int digit; // 4 áàéòà
+		double bigfl; // 8 áàéò
+		char letter; // 1 áàéò
 	};
 	
 	union hold fit; // â fit ìîæíî çàïèñàòü ñèìâîë, ÷èñëî òèïà int èëè ÷èñëî òèïà double.
-	union hold save[10]; //  ìàññèâ òàêèõ æå ýëåìåíòîâ.
+	union hold save[10]; //  ìàññèâ òàêèõ æå ýëåìåíòîâ. Êîìïèëÿòîð âûäåëÿåò íàèáîëüøåå êîëè÷åñòâî ïàìÿòè äëÿ ìíîãîâåñÿùåãî òèïà.
 	union hold * pu; // óêàçàòåëü íà àäðåñ îáúåäèíåíèÿ hold.
 	
 	union hold valA;
@@ -1977,6 +1986,188 @@ int main (void) {
 	fit.digit = 23; // â ïåðåìåííîé fit õðàíèòñÿ 23; èñïîëüçóåòñÿ 2 áàéòà.
 	fit.bigfl = 2.0; // 23 î÷èùåíî, 2.0 ñîõðàíåíî; èñïîëüçóåòñÿ 8 áàéò.
 	fit.letter = 'c'; // 2.0 î÷èùåíî, h ñîõðàíåíî; èñïîëüçóåòñÿ 1 áàéò.
+	
+	
+	pu = &fit; // â óêàçàòåëü çàïèñàëè àäðåñ.
+	int x = (*pu).digit; // íó ëèáî ìîæíî çàïèñàòü òàê: x = pu->digit;
+	
+	
+	
+	
+	
+	struct owner {
+		char socsecurity[12];
+	};
+	
+	struct leasecompany {
+		char name[40];
+		char headquaters[40];
+	};
+	
+	union data {
+		struct owner owncar; // owncar âñòðàèâàåòñÿ â ñòðóêòóðó 
+		struct leasecompany leasecar; 
+	};
+	
+	struct car_data {
+		char make[15];
+		int status;
+		union data ownerinfo;
+	};
+	
+	union data struc;
+	struc.leasecar = {"Billy", "228gell"};   
+	puts (struc.leasecar.headquaters); // OUTPUT: 228gell
+	
+	
+	
+	
+	//ÀÍÎÍÈÌÍÛÅ ÎÁÚÅÄÈÍÅÍÈß:
+	
+	
+	struct owner {
+		char socsecurity[12];
+	};
+	
+	struct leasecompany {
+		char name[40];
+		char headquaters[40];
+	};
+	
+	struct car_data {
+		char make[15];
+		int status;
+		union { // ÁÅÇ ÈÌÅÍÈ!
+			struct owner owncar;
+			struct leasecompany leasecar;
+		};
+	};
+	
+    struct car_data value;
+    value.owncar = {.socsecurity = "hello"};
+    char* str = value.owncar.socsecurity;
+    puts (str);
+    
+
+
+	
+	
+	
+	
+	
+	
+	enum spectrum { // ïåðå÷èñëèìîñòü
+		red, // = 0;
+		orange, // = 1;
+		yellow, // = 2;
+	};
+	
+	spectrum color; // ñîçäàíèå ïåðåìåííîé òèïà spectrum
+	
+	color = red; // = 0	
+	printf ("red = %d\n", color);
+	color = orange; // = 1
+	printf ("orange = %d\n", color);
+	color = yellow; // = 2	
+	printf ("yellow = %d\n", color);
+	
+	
+	
+	enum levels { // ïðè æåëàíèè ìîæíî ñàìîìó ïðèñâîèòü öåëî÷èñëåííûå çíà÷åíèÿ.
+		low = 100, 
+		medium = 500,
+		high = 2000
+	};
+	
+	levels stage = low;
+	printf ("%d", stage);  // OUTPUT: 100
+	
+	
+	enun feline {cat, lynx = 10, puma, tiger}; // Â ýòîì ñëó÷àå cat ïîëó÷àåò ñòàíäàðòíîå çíà÷åíèå Î, à lynx, puma è tiger — ñîîòâåòñòâåííî,
+																																	10, 11 è 12.
+	
+	*/
+	
+	
+	
+	
+	
+	
+	
+	//BYTE = 'c';
+	
+	typedef char* string; // string <=> char*, ò.å. "ñîçäàí" îòäåëüíûé òèï string äëÿ óêàçàòåëåé íà ñòðîêè ïðè ïîìîùè typedef;
+	
+	/*
+	
+	typedef struct complex {
+		float real;
+		float imag;
+	} COMPLEX; // Òåïåðü äëÿ ïðåäñòàâëåíèÿ êîìïëåêñíûõ ÷èñåë âìåñòî ñòðóêòóðû ïî èìåíè complex ìîæíî ïðèìåíÿòü òèï COMPLEX.
+	
+	*/
+	
+	// òàê æå, íî áåç ñëîâà "complex". Âñ¸ áóäåò ðàáîòàòü òàêæå.
+	
+	/*
+	
+	typedef struct {
+		float real;
+		float imag;
+	} COMPLEX; // Òåïåðü äëÿ ïðåäñòàâëåíèÿ êîìïëåêñíûõ ÷èñåë âìåñòî ñòðóêòóðû ïî èìåíè complex ìîæíî ïðèìåíÿòü òèï COMPLEX.
+	
+	COMPLEX struc; // òåïåðü struc - ýòî ñòðóêòóðà ïî øàáëîíó âûøå.
+	
+	// Ìîæíî äåëàòü òàê:
+	
+	typedef struct {double x; double y;} rect;
+	rect r1 = {6.0, 3.0};
+	rect r2;
+	r2 = r1;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	char line [LEN];
+	char copy [LEN];
+	char choise;
+	void (*pfun)(char *);
+	puts ("Ââåäèòå ñòðîêó, ëèáî íàæìèòå êëàâèøó [enter]");
+	gets (line);
+	while (line[0] != '\0') {
+		
+		while ((choise = showmenu()) != 'n') {
+			switch (choise) {
+				case 'u': pfun = ToUpper; break;
+				case 'l': pfun = ToLower; break;
+				case 't': pfun = Transpose; break;
+				case 'o': pfun = Dummy; break;
+			}
+			strcpy (copy, line);
+			show (pfun, copy);
+			puts ("Ââåäèòå ñòðîêó, ëèáî íàæìèòå êëàâèøó [enter]");	
+		}
+		puts ("Ïðîãðàììà çàâåðøåíà");
+	}
+	
+	*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	return 0;
 
@@ -2305,4 +2496,59 @@ double sum_struct2 (const struct funds money[], int n) {
 	for (i = 0; i < n; i++)
 		total += money[i].bankfund + money[i].savefund;
 	return total;
+}
+
+char showmenu (void) {
+	char ans;
+	puts ("Ââåäèòå âûáðàííûé ýëåìåíò èç ìåíþ:");
+	puts ("u) íèæíèé ðåãèñòð		l) âåðõíèé ðåãèñòð");
+	puts ("t) ïîìåíÿòü ðåãèñòðû		o) èñõîäíûé ðåãèñòð");
+	puts ("n) ñëåäóþùàÿ ñòðîêà");
+	ans = getchar ();
+	ans = tolower(ans);
+	eatline ();
+	while (strchr ("ulton", ans) == NULL) {
+		puts ("Ââåäèòå u, l, t, o èëè n");
+		ans = tolower (getchar());
+		eatline();
+	}
+	return ans;
+}
+
+void eatline (void) {
+	while (getchar () != '\n')
+		continue;
+}
+
+void ToUpper (char * str) {
+	while (*str) {
+		*str = toupper(*str);
+		str++;
+	}
+}
+
+void ToLower (char * str) {
+	while (*str) {
+		*str = tolower(*str);
+		str++;
+	}
+}
+
+void Transpose (char * str) {
+	while (*str) {
+		if (islower (*str)) 
+			*str = toupper (*str);
+		else if (isupper (*str))
+			*str = tolower (*str);
+		str++;
+	}
+}
+
+void Dummy (char * str) {
+	// îñòàâëÿåò ñòðîêó ïóñòîé;
+}
+
+void show (void (*fp)(char *), char * str) {
+	(*fp)(str);
+	puts (str); 
 }
