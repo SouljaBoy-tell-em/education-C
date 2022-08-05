@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <windows.h>
 // #include <stdatomic.h>
+#include <limits.h>
 
 #define PRAISE "Your name is the best!"
 #define NAME value
@@ -74,6 +75,8 @@ void ToLower (char * str);
 void Transpose (char * str);
 void Dummy (char * str);
 void show (void (*fp)(char *), char * str);
+char * itobs (int n, char * ps);
+void show_bstr (const char * str);
 
 struct book { // ñîçäàíèå ñòðóêòóðû
 	char title[41];
@@ -2096,7 +2099,7 @@ int main (void) {
 	
 	//BYTE = 'c';
 	
-	typedef char* string; // string <=> char*, ò.å. "ñîçäàí" îòäåëüíûé òèï string äëÿ óêàçàòåëåé íà ñòðîêè ïðè ïîìîùè typedef;
+	//typedef char* string; // string <=> char*, ò.å. "ñîçäàí" îòäåëüíûé òèï string äëÿ óêàçàòåëåé íà ñòðîêè ïðè ïîìîùè typedef;
 	
 	/*
 	
@@ -2165,9 +2168,114 @@ int main (void) {
 	
 	
 	
+	/*
+	
+	int val = 2; // val = 2 = 00000010; ~val = -3 = 11111101; (ïîáèòîâîå îòðèöàíèå);
+	printf ("val = %d\n~val=%d\n\n", val, 256+(~val));
+	
+	// ïîáèòîâàÿ îïåðàöèÿ È (&): (10010011) & (00111101) = (00010001);
+	
+	int val1 = 2, val2 = 3; // val1 = 00000010; val2 = 00000011;
+	val1 = val1 & val2; // (00000010) & (00000011) = (00000010); = 2
+	printf ("%d\n\n", val1);
+	
+	// ïîáèòîâàÿ îïåðàöèÿ ÈËÈ (|): Äëÿ êàæäîé ïîçèöèè áèò áóäåò ðàâåí 1, åñëè ëþáîé èç ñîîòâåòñòâóþùèõ áèòîâ â îïåðàíäàõ ðàâåí 1.
+	// (10010011) | (00111101) = (10111111);
+	
+	int val3 = 5, val4 = 6; // val1 = 00000101; val2 = 00000110;
+	val3 = val3 | val4; // (00000101) | (00000110) = (00000111) = 7;
+	printf ("%d\n\n", val3);
+	
+	// ïîáèòîâîå "èñêëþ÷àþùåå" ÈËÈ (^): ëÿ êàæäîé ïîçèöèè ðåçóëüòèðóþùèé áèò áóäåò ðàâåí 1, åñëè îäèí èëè äðóãîé (íî íå îáà) èç ñîîòâåòñòâóþùèõ
+	// áèòîâ â îïåðàíäàõ ðàâåí 1.
+	
+	val3 = 5; val4 = 6;
+	val3 = val3 ^ val4; // (00000011) 
+	printf ("%d\n\n", val3); // (00000101) ^ (00000110) = (00000011); = 3;
+	
+	// ÑÄÂÈÃ ÂËÅÂÎ: (11100101) << 2 = (10010100); ñïðàâà äâîè÷íàÿ çàïèñü äîïîëíÿåòñÿ íóëÿìè.
+	// ÑÄÂÈÃ ÂÏÐÀÂÎ: (11100101) >> 2 = (00111001); ñëåâà äâîè÷íàÿ çàïèñü äîïîëíÿåòñÿ íóëÿìè.
+	
+	int stonk = 1; // (00000001) = 1;
+	int onkoo;
+	onkoo = stonk << 3; // (00000001) << 3 = (00001000) = 8;
+	printf ("%d\n\n", onkoo);
+	
+	int sweet = 16; // (00010000) = 16
+	int ooosw;
+	ooosw = sweet >> 3; // (00000010); = 2
+	printf ("%d", ooosw);
+	
+	*/
 	
 	
 	
+	
+	
+	
+	/*
+	
+	char bin_str[CHAR_BIT * sizeof (int) + 1];
+	int number;
+	puts ("Ââîäèòå öåëûå ÷èñëà è ïðîñìàòðèâàéòå èõ äâîè÷íûå ïðåäñòàâëåíèÿ");
+	puts ("Íå÷èñëîâîé ââîä çàâåðøàåò ïðîãðàììó");
+	while (scanf ("%d", &number) == 1) {
+		itobs (number, bin_str);
+		printf ("%d ïðåäñòàâëÿåòñÿ êàê ", number);
+		show_bstr (bin_str);
+		putchar ('\n');
+	}
+	puts ("Ïðîãðàììà çàâåðøåíà");
+	
+	*/
+
+	
+	
+	
+	
+	
+	
+	
+	struct { // ýòî îáúÿâëåíèå óñòàíàâëèâàåò 4 îäíîáèòîâûõ ïîëÿ.
+		unsigned int autfd: 1;
+		unsigned int bldfc: 1;
+		unsigned int undln: 1;
+		unsigned int itals: 1;
+	} prnt;
+	
+	prnt.autfd = 1; // > 2 ïðèñâîèòü íå ïîëó÷èòñÿ.
+	prnt.undln = 0;
+	
+	struct { // îïðåäåëåíèå äâóõ äâóõáèòîâûõ ïîëåé è îäíîãî âîñüìèáèòîâîãî.
+		unsigned int code1 : 2;
+		unsigned int code2 : 2;
+		unsigned int code3 : 8;
+	} prcode;
+	
+	prcode.code1 = 0;
+	prcode.code2 = 3;
+	prcode.code3 = 255;
+	
+	struct { // Çäåñü ìåæäó ïîëÿìè stuff. fieldl è stuff. field2 èìååòñÿ 2-áèòîâûé ïðîìåæóòîê,
+	unsigned int fieldl : 1;	// à ïîëå stuff. field3 õðàíèòñÿ â ñëåäóþùåé îáëàñòè int.
+	unsigned int : 2;
+	unsigned int field2 : 1;
+	unsigned int : 0;
+	unsigned int field3 : 1;
+	} stuff;
+	
+	
+	
+	
+	struct box_props {
+		bool opaque : 1; // âêëþ÷åíèå/âûêëþ÷åíèå ðàìêè;
+		unsigned int fill_color: 3; // 8 âîçìîæíûõ öâåòîâ;
+		unsigned int: 4; // ïðîìåæóòîê â 4 áèòà ìåæäó fill_color è show_border;
+		bool show_border: 1; // âêëþ÷åíèå ðàìêè;
+		unsigned int border_color: 3; // 8 öâåòîâ ðàìêè;
+		unsigned int border_style: 2; // ñòèëü ðàìêè: 3 âàðèàíòà;
+		unsigned int: 2;
+	};
 	
 	return 0;
 
@@ -2551,4 +2659,23 @@ void Dummy (char * str) {
 void show (void (*fp)(char *), char * str) {
 	(*fp)(str);
 	puts (str); 
+}
+
+char * itobs (int n, char * ps) {
+	int i;
+	const static int size = CHAR_BIT * sizeof (int);
+	for (i = size; i >= 0; i--, n = n >> 1)
+		ps[i] = (1 & n) + '0';
+	ps[size] = '\0';
+	return ps;
+}
+
+void show_bstr (const char * str) {
+	int i = 0;
+	while (str[i]) {
+		putchar(str[i]);
+		if (i % 4 == 0 && str[i])
+			putchar (' ');
+		i++;
+	}
 }
