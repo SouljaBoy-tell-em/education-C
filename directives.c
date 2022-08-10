@@ -2,6 +2,8 @@
 #include <stdarg.h>
 #include <math.h>
 #include <stdlib.h>
+#include <assert.h>
+#include <string.h>
 
 #define PX printf("X = %d\n", x)
 #define FMT "X = %d\n"
@@ -61,6 +63,7 @@
 void why_me();
 void sign_off (void);
 void too_bad (void);
+int sort_func (const void * p1, const void * p2);
 
 inline static void eatline () {
   while (getchar() != '\n')
@@ -228,10 +231,66 @@ int main () {
 
   */
 
+  /*
 
-  
+  double arr[100];
+  double * pt = arr;
+  int i;
 
-return 0;
+  for (i = 0; i < 100; i++)
+    arr[i] = (rand() % 100);
+  puts ("Before: ");
+  for (i = 0; i < 100; i++) {
+    if (i % 10 == 0)
+      putchar ('\n');
+    printf ("%.1lf ", arr[i]);
+  }
+  putchar ('\n');
+  putchar ('\n');
+  puts ("After: ");
+
+  qsort (arr, 100, sizeof (double), sort_func);
+
+  for (i = 0; i < 100; i++) {
+    if (i % 10 == 0)
+      putchar ('\n');
+    printf ("%.1lf ", arr[i]);
+  }
+
+  */
+
+  /*
+
+  int a, b;
+  puts ("Input 2 numbers: ");
+  while (scanf ("%d %d", &a, &b) == 2) {
+    int res = a * a - b * b;
+    assert (res >= 0);
+    printf ("a^2 - b^2 = %d\n", res);
+    puts ("Input 2 numbers: ");
+  }
+
+  */
+
+  //int a = 2;
+  //_Static_assert (CHAR_BIT == 16);
+
+  /*
+
+  int arr1[10] = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19};
+  int arr2[10] = {0, 2, 4, 6, 8, 10, 12, 14, 16, 18};
+
+  memcpy (arr2, arr1, 16); // void * memcpy (void *s1, const void *s2, size_t count); - копирует count байтов из arr1 в arr2;
+  int i;
+  for (i = 0; i < 10; i++)
+    printf ("%d ", arr2[i]);
+
+  */
+
+
+
+
+  return 0;
 }
 
 void why_me() {
@@ -246,4 +305,25 @@ void sign_off (void) {
 
 void too_bad (void) {
   puts ("ERROR!");
+}
+
+int sort_func (const void * p1, const void * p2) {
+  const double * a1 = (const double *) p1;
+  const double * a2 = (const double *) p2;
+
+  if (*a1 < *a2)
+    return -1;
+  if (*a1 == *a2)
+    return 0;
+  else
+    return 1;
+
+}
+
+double sum (int lim, ...) {
+  va_list ap;
+  double total = 0;
+  int i;
+  va_start (ap, lim);
+
 }
