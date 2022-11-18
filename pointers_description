@@ -34,7 +34,7 @@ OUTPUT: n = 47, adress of n = 00000000006AFD4C
 
 int n = 47;
 int* p;
-*p = &n;
+p = &n;
 
 Можно было записать и короче:
 
