@@ -14,11 +14,12 @@ int GetG ();
 int GetE ();
 int GetN ();
 int GetT ();
+int GetP ();
 
 
 int main (void) {
 
-	FILE * expression = fopen (FILENAME, "r");
+	FILE * expression		  = fopen (FILENAME, "r");
 	fread (s, sizeof (char), MAXLENTITLE, expression);
 
 	printf ("NUMBER: %d\n", GetG ());
@@ -75,13 +76,13 @@ int GetE () {
 
 int GetT () {
 
-	int val = GetN ();
+	int val = GetP ();
 
 	while ( *s == '*' || *s == '/') {
 
 		char op = *s;
 		s++;
-		int val2 = GetN ();
+		int val2 = GetP ();
 
 		if (op == '*')
 			val *= val2;
@@ -89,6 +90,24 @@ int GetT () {
 		else
 			val /= val2;
 	}
+
+	return val;
+}
+
+
+int GetP () {
+	
+	int val = 0;
+
+	if ( *s == '(') {
+
+		s++;
+		val = GetE ();
+		s++;
+	}
+
+	else
+		val = GetN ();
 
 	return val;
 }
